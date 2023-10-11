@@ -20,7 +20,6 @@ class Participation(models.Model):
     created_at = models.DateTimeField(verbose_name="参与任务时间", default= datetime.now)
 
 class Tasks(models.Model):
-    task_id = models.IntegerField()
     host_id = models.IntegerField()
     parent_id = models.IntegerField()
     title = models.CharField(max_length=20, verbose_name= "任务名称", default= "任务")
@@ -40,7 +39,6 @@ class Friend(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
 
 class Comments(models.Model):
-    comment_id = models.IntegerField()
     task_id = models.IntegerField()
     user_id = models.IntegerField()
     Like = models.IntegerField()

@@ -20,11 +20,12 @@ def createTask(request):
     })
 
 def changeTask(request):
-    taskid = request.params['id']
-    newdata = request.params['data']
+    print(request)
+    taskid = request.GET.get('id',None)
+    newdata = request.GET.get('data',[])
 
     try:
-        task = Tasks.objects.get(task_id=taskid)
+        task = Tasks.objects.get(id=taskid)
     except Tasks.DoesNotExist:
         return JsonResponse({
             'code' : 404,
@@ -53,11 +54,11 @@ def changeTask(request):
     })
 
 def endPlan(request):
-    taskid = request.params['task_id']
-    text = request.params['text']
+    taskid = request.GET.get('id',None)
+    text = request.GET.get('text',None)
 
     try:
-        task = Tasks.objects.get(task_id=taskid)
+        task = Tasks.objects.get(id=taskid)
     except Tasks.DoesNotExist:
         return JsonResponse({
             'code' : 404,
@@ -74,8 +75,8 @@ def endPlan(request):
     })
 
 def delect(request):
-    taskid = request.params['task_id']
-    task = Tasks.objects.get(task_id=taskid)
+    taskid = request.GET.get('id',None)
+    task = Tasks.objects.get(id=taskid)
     task.delete()
 
     return JsonResponse({

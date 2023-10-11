@@ -21,8 +21,8 @@ def createSubTask(request):
     })
 
 def deleteSubTask(request):
-    taskid = request.params['task_id']
-    task = Tasks.objects.get(task_id=taskid)
+    taskid = request.params['id']
+    task = Tasks.objects.get(id=taskid)
     task.delete()
 
     return JsonResponse({

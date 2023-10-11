@@ -31,7 +31,7 @@ def getComments(request):
     return JsonResponse(response_Data)
 
 def createComment(request):
-    info = request.params['data']
+    info = request.GET.get('id',None)
 
     record = Comments.objects.create(task_id=info['task_id'],
                                      user_id=info['user_id'],
@@ -44,15 +44,15 @@ def createComment(request):
     })
 
 def delectComment(request):
-    commentid = request.params['comment_id']
-    userid = request.params['userid']
+    commentid = request.GET.get('comment_id',None)
+    userid = request.GET.get('userid',None)
 
     #判断是否为当前用户自己的评论
     session_data = request.session
     if 'user_id' in session_data:
         current_user_id = session_data['user_id']
         if current_user_id == userid:
-            comment = Comments.objects.get(comment_id=commentid)
+            comment = Comments.objects.get(id=commentid)
             comment.delete()
 
             return JsonResponse({
@@ -71,9 +71,9 @@ def delectComment(request):
         })
 
 def likeComment(request):
-    commentid = request.params['comment_id']
+    commentid = request.GET.get('comment_id',None)
     try:
-        comment = Comments.objects.get(comment_id=commentid)
+        comment = Comments.objects.get(id=commentid)
     except Comments.DoesNotExist:
         return JsonResponse({
             'code' : 404,

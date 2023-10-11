@@ -4,19 +4,20 @@ from common.models import Tasks
 
 
 def getTaskInfo(request):
-    task = Tasks.objects.values()
+    TASK = Tasks.objects.all()
     task_id = request.GET.get('task_id',None)
 
     #如果提供了task_id参数，只查询特定任务信息
     if task_id:
-        tasks = task.filter(task_id=task_id)
-
+        tasks = TASK.filter(id=task_id)
+    else:
+        tasks = TASK
     task_data = [] #用于存储任务数据的列表
 
     #遍历查询到的任务信息
     for task in tasks:
         task_dict = {
-            'task_id' : task['task_id'],
+            'id' : task['id'],
             'title' : task['title'],
             'body' : task['body'],
             'plan_start_time' : task['plan_start_time'],
@@ -48,7 +49,7 @@ def getTaskInfoInDate(request):
     # 遍历查询到的任务信息
     for task in tasks:
         task_dict = {
-            'task_id': task['task_id'],
+            'id': task['id'],
             'title': task['title'],
             'body': task['body'],
             'plan_start_time': task['plan_start_time'],
@@ -77,7 +78,7 @@ def getHistroyTaskInfo(request):
     # 遍历查询到的任务信息
     for task in tasks:
         task_dict = {
-            'task_id': task['task_id'],
+            'id': task['id'],
             'title': task['title'],
             'body': task['body'],
             'plan_start_time': task['plan_start_time'],

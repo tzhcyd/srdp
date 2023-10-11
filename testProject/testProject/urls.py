@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from users.user_info import dispatcher
 from users import log_in_out
@@ -35,5 +35,6 @@ urlpatterns = [
     path('user/friend/add', friend.addfriend),
     path('user/friend/delete', friend.delfriend),
     path('user/friend/list', friend.getlist),
-    path('user/friend/deny', friend.denyfriend)
+    path('user/friend/deny', friend.denyfriend),
+    path('task/',include('common.urls'))
 ]
